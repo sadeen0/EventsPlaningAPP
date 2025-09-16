@@ -18,6 +18,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get en => 'English';
 
   @override
+  String get lang => 'En';
+
+  @override
   String get dark => 'Dark Mode';
 
   @override
@@ -64,4 +67,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eating => 'Eating';
+
+  @override
+  String get name => 'Event Name';
+
+  @override
+  String get date => 'Event Date';
+
+  @override
+  String get addEvent => 'Add Event';
+
+  @override
+  String get enterTitle => 'Please enter name';
+
+  @override
+  String get enterDate => 'Please enter date';
 }

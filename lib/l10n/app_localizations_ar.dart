@@ -18,6 +18,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get en => 'الإنجليزية';
 
   @override
+  String get lang => 'Ar';
+
+  @override
   String get dark => 'الوضع المظلم';
 
   @override
@@ -63,5 +66,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get workshop => 'ورشة عمل';
 
   @override
-  String get eating => 'تناول الطعام';
+  String get eating => 'الطعام';
+
+  @override
+  String get name => 'اسم الفعالية';
+
+  @override
+  String get date => 'تاريخ الفعالية';
+
+  @override
+  String get addEvent => 'إضافة فعالية';
+
+  @override
+  String get enterTitle => 'الرجاء إدخال الاسم';
+
+  @override
+  String get enterDate => 'الرجاء إدخال التاريخ';
 }

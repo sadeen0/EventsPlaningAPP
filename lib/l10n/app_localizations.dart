@@ -116,6 +116,12 @@ abstract class AppLocalizations {
   /// **'English'**
   String get en;
 
+  /// No description provided for @lang.
+  ///
+  /// In en, this message translates to:
+  /// **'En'**
+  String get lang;
+
   /// No description provided for @dark.
   ///
   /// In en, this message translates to:
@@ -211,6 +217,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Eating'**
   String get eating;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Name'**
+  String get name;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Date'**
+  String get date;
+
+  /// No description provided for @addEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Event'**
+  String get addEvent;
+
+  /// No description provided for @enterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter name'**
+  String get enterTitle;
+
+  /// No description provided for @enterDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter date'**
+  String get enterDate;
 }
 
 class _AppLocalizationsDelegate

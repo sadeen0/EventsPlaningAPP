@@ -1,7 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:localization/core/utilis/AppColors.dart';
+import 'package:localization/core/utils/AppColors.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
@@ -16,7 +15,7 @@ class AppTheme {
       //   fontSize: 25,
       // ),
     ), 
-    
+
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed, // Fixed for more than 3 items, shifting for 3 or less items
       backgroundColor: AppColors.primaryLight,
@@ -30,6 +29,8 @@ class AppTheme {
     )
   );
 
+
+
   static final ThemeData darkTheme = ThemeData(
     appBarTheme:  AppBarTheme(
       backgroundColor: AppColors.primaryDark,
@@ -41,7 +42,8 @@ class AppTheme {
       //   fontWeight: FontWeight.w500,
       //   fontSize: 25,
       // ),
-    ),    
+    ),  
+      
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       backgroundColor: AppColors.primaryDark,

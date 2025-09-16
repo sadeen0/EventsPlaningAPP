@@ -2,6 +2,7 @@
     "lg" : "Language",
     "ar" : "Arabic",
     "en" : "English",
+    "lang": "En",
     "dark" : "Dark Mode",
     "light" : "Light Mode",
     "theme" : "Theme",
@@ -17,5 +18,10 @@
     "games": "Games",
     "meeting": "Meeting",
     "workshop": "Workshop",
-    "eating": "Eating"
+    "eating": "Eating",
+    "name": "Event Name",
+    "date": "Event Date",
+    "addEvent": "Add Event",
+    "enterTitle": "Please enter name",
+    "enterDate": "Please enter date"
 }

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:localization/core/utilis/AppColors.dart';
+import 'package:localization/core/providers/appTheme_Provider.dart';
+import 'package:localization/core/theme/AppTheme.dart';
+import 'package:localization/core/utils/AppColors.dart';
+import 'package:provider/provider.dart';
 
 class EventItemWidget extends StatelessWidget {
   const EventItemWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<AppThemeProvider>(context);
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 10,
@@ -19,7 +23,7 @@ class EventItemWidget extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(25),
         border: Border.all(
-          color: AppColors.primaryLight,
+         // color: themeProvider.appTheme == ThemeMode.light ? AppColors.transparentColor : AppColors.primaryLight ,
           width: 2
         )
       ),
@@ -32,7 +36,7 @@ class EventItemWidget extends StatelessWidget {
             ),
             decoration:  BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: AppColors.whiteColor
+              color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,22 +45,19 @@ class EventItemWidget extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.primaryLight
+                    color: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark
                   ),
                 ),
                 Text("Feb",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.normal,
-                    color: AppColors.primaryLight
+                    color: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark
                   ),
                 )
               ],
             ),
-           )
-  
-    
-          
+           )      
         ],
       ),
     );

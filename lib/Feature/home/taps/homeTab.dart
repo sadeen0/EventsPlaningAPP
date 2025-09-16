@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:localization/core/utilis/AppColors.dart';
+import 'package:localization/core/providers/appLanguage_Provider.dart';
+import 'package:localization/core/providers/appTheme_Provider.dart';
+import 'package:localization/core/theme/AppTheme.dart';
+import 'package:localization/core/utils/AppColors.dart';
 import 'package:localization/core/widget/EventItemWidget.dart';
 import 'package:localization/l10n/app_localizations.dart';
 import 'package:localization/core/widget/TabEventWidget.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatefulWidget {
   HomeTab({super.key});
@@ -16,6 +20,8 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<AppThemeProvider>(context);
+
     List<String> events = [
       AppLocalizations.of(context)!.all,
       AppLocalizations.of(context)!.sports,
@@ -26,8 +32,10 @@ class _HomeTabState extends State<HomeTab> {
       AppLocalizations.of(context)!.eating,
     ];
     return Scaffold(
+      backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : Colors.black,
+
       appBar: AppBar(
-        backgroundColor: AppColors.primaryLight,
+        backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -36,7 +44,8 @@ class _HomeTabState extends State<HomeTab> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.welcome,
-                  style: TextStyle(fontSize: 16, color: AppColors.whiteColor),
+                  style: TextStyle(fontSize: 16,
+                   color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,),
                 ),
                 SizedBox(height: 2),
                 Text(
@@ -44,7 +53,7 @@ class _HomeTabState extends State<HomeTab> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.whiteColor,
+                    color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
                   ),
                 ),
               ],
@@ -56,15 +65,15 @@ class _HomeTabState extends State<HomeTab> {
                 Container(
                   padding: EdgeInsets.all(7),
                   decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
+                    color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    "En",
+                    AppLocalizations.of(context)!.lang,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primaryLight,
+                      color: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryDark : AppColors.blackColor,
                     ),
                   ),
                 ),
@@ -76,10 +85,10 @@ class _HomeTabState extends State<HomeTab> {
       body: Column(
         children: [
           Container(
-            height: 120,
+            height: 130,
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
-              color: AppColors.primaryLight,
+              color: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(40),
                 bottomRight: Radius.circular(40),
@@ -92,13 +101,13 @@ class _HomeTabState extends State<HomeTab> {
                   children: [
                     Icon(
                       Icons.location_on_outlined,
-                      color: AppColors.whiteColor,
+                      color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
                       size: 24,
                     ),
                     Text(
                       "Jerusalem, Palestine",
                       style: TextStyle(
-                        color: AppColors.whiteColor,
+                        color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
                         fontSize: 18,
                       ),
                     ),
@@ -144,7 +153,7 @@ class _HomeTabState extends State<HomeTab> {
                 horizontal: 20,
                 vertical: 10
               ),
-              itemCount: 25,
+              itemCount: 3,
               itemBuilder: (context, index) {
                 return EventItemWidget();
               },

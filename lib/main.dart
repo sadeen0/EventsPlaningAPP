@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:localization/Feature/home/homePage.dart';
-import 'package:localization/Feature/profile/ProfilePage.dart';
 import 'package:localization/core/providers/appLanguage_Provider.dart';
 import 'package:localization/core/theme/AppTheme.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() {
 
