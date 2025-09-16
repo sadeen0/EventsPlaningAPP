@@ -21,7 +21,6 @@ class FavoriteTab extends StatelessWidget {
                 ? AppColors.whiteColor
                 : AppColors.primaryLight,
             fontSize: 23,
-            fontWeight: FontWeight.bold,
             fontFamily: 'Poppins'
           ),
         ),

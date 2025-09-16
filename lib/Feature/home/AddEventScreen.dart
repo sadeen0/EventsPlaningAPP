@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
-import 'package:localization/core/utils/TextStyle.dart';
 import 'package:localization/core/utils/CustomButton.dart';
 import 'package:localization/core/widget/TapEvents.dart';
 import 'package:localization/l10n/app_localizations.dart';
@@ -52,12 +51,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
             ? AppColors.primaryLight
             : AppColors.primaryDark,
         title: Text(
-          AppLocalizations.of(context)!.favorites,
+          AppLocalizations.of(context)!.addEvent,
           style: TextStyle(
             color: themeProvider.appTheme == ThemeMode.light
                 ? AppColors.whiteColor
                 : AppColors.primaryLight,
             fontSize: 23,
+            fontFamily: 'Poppins',
           ),
         ),
       ),
