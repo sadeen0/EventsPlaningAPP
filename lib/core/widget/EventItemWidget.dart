@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
-import 'package:localization/core/theme/AppTheme.dart';
 import 'package:localization/core/utils/AppColors.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +22,7 @@ class EventItemWidget extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(25),
         border: Border.all(
-         // color: themeProvider.appTheme == ThemeMode.light ? AppColors.transparentColor : AppColors.primaryLight ,
+         //color: themeProvider.appTheme == ThemeMode.light ? AppColors.transparentColor : AppColors.primaryLight ,
           width: 2
         )
       ),

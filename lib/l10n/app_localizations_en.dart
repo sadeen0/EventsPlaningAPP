@@ -48,6 +48,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome => 'Welcome';
 
   @override
+  String get city => 'Jerusalem';
+
+  @override
+  String get country => 'Palestine';
+
+  @override
   String get all => 'All';
 
   @override
@@ -69,17 +75,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eating => 'Eating';
 
   @override
+  String get title => 'Title';
+
+  @override
+  String get description => 'Event Description';
+
+  @override
   String get name => 'Event Name';
 
   @override
   String get date => 'Event Date';
 
   @override
+  String get time => 'Event Time';
+
+  @override
   String get addEvent => 'Add Event';
+
+  @override
+  String get chooseDate => 'Choose Date';
+
+  @override
+  String get chooseTime => 'Choose Time';
+
+  @override
+  String get chooseLocation => 'Choose Event Location';
+
+  @override
+  String get searchEvent => 'Search Event';
 
   @override
   String get enterTitle => 'Please enter name';
 
   @override
   String get enterDate => 'Please enter date';
+
+  @override
+  String get enterTime => 'Please enter time';
 }

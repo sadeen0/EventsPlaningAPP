@@ -12,6 +12,8 @@
     "favorites" : "Favorites",
     "profile" : "Profile",
     "welcome" : "Welcome",
+    "city" : "Jerusalem",
+    "country" : "Palestine",
     "all": "All",
     "sports": "Sports",
     "birthday": "Birthday",
@@ -19,9 +21,17 @@
     "meeting": "Meeting",
     "workshop": "Workshop",
     "eating": "Eating",
+    "title": "Title",
+    "description": "Event Description",
     "name": "Event Name",
     "date": "Event Date",
+    "time": "Event Time",
     "addEvent": "Add Event",
+    "chooseDate": "Choose Date",
+    "chooseTime": "Choose Time",
+    "chooseLocation": "Choose Event Location",
+    "searchEvent": "Search Event",
     "enterTitle": "Please enter name",
-    "enterDate": "Please enter date"
+    "enterDate": "Please enter date",
+    "enterTime": "Please enter time"
 }

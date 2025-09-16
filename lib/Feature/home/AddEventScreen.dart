@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:localization/Feature/home/homePage.dart';
-import 'package:localization/Model/EventModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
 import 'package:localization/core/utils/TextStyle.dart';
 import 'package:localization/core/utils/CustomButton.dart';
+import 'package:localization/core/widget/TapEvents.dart';
 import 'package:localization/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+
+
+
 
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({super.key});
@@ -17,79 +19,205 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
+  int selectedIndex = 0;
   var formKey = GlobalKey<FormState>();
   var TitleController = TextEditingController();
+  var DescriptionController = TextEditingController();
   var DateController = TextEditingController(
     text: DateFormat("dd/MMM").format(DateTime.now()),
+  );
+
+  var TimeController = TextEditingController(
+    text: DateFormat("HH:mm").format(DateTime.now()),
   );
 
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
 
-    var eventsList = <EventModel>[];
-    
+    List<String> events = [
+      AppLocalizations.of(context)!.all,
+      AppLocalizations.of(context)!.sports,
+      AppLocalizations.of(context)!.birthday,
+      AppLocalizations.of(context)!.games,
+      AppLocalizations.of(context)!.meeting,
+      AppLocalizations.of(context)!.workshop,
+      AppLocalizations.of(context)!.eating,
+    ];
+
     return Scaffold(
-      backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : Colors.black,
-      
+      backgroundColor: themeProvider.appTheme == ThemeMode.light
+          ? AppColors.whiteColor
+          : Colors.black,
+
       appBar: AppBar(
-      backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark,
+        backgroundColor: themeProvider.appTheme == ThemeMode.light
+            ? AppColors.primaryLight
+            : AppColors.primaryDark,
         title: Text(
-          AppLocalizations.of(context)!.addEvent,
+          AppLocalizations.of(context)!.favorites,
           style: getTitleTextStyle(
-            Color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight, 
-            fontSize: 23),
-        )
+            color: themeProvider.appTheme == ThemeMode.light
+                ? AppColors.whiteColor
+                : AppColors.primaryLight,
+            fontSize: 23,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: formKey,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.name,
-                    style: getBodyTextStyle(Color: AppColors.primaryLight),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                height: 260,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/Birthday.png"),
+                    fit: BoxFit.fill,
                   ),
-                  TextFormField(
-                    cursorColor: AppColors.primaryLight,
-                    decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.primaryLight),
-                      ),
-                    ),
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(
+                    // color: themeProvider.appTheme == ThemeMode.light ? AppColors.transparentColor : AppColors.primaryLight ,
+                    width: 2,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              DefaultTabController(
+                length: events.length,
+                child: TabBar(
+                  onTap: (index) {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  indicatorColor: AppColors.transparentColor,
+                  dividerColor: AppColors.transparentColor,
+                  labelColor: AppColors.whiteColor,
+                  isScrollable: true,
+                  labelPadding: EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 5,
+                  ),
+                  tabAlignment: TabAlignment.start,
 
-                    controller: TitleController,
-                    validator: (value) {
-                      if (value != null) {
-                        if (value.length < 4) {
-                          return AppLocalizations.of(context)!.enterTitle;
+                  tabs: events.map((eventName) {
+                    return Tab(
+                      child: TapEvents(
+                        eventName: eventName,
+                        isSelected: selectedIndex == events.indexOf(eventName),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+
+              Padding(padding: const EdgeInsets.all(15)),
+              Form(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      cursorColor: AppColors.primaryLight,
+                      readOnly: true,
+                      controller: TitleController,
+                      decoration: InputDecoration(
+                        suffixIcon: Icon(
+                          Icons.event,
+                          color: AppColors.primaryLight,
+                        ),
+                        labelText: AppLocalizations.of(context)!.title,
+                        labelStyle: TextStyle(
+                          color: AppColors.primaryLight,
+                          fontSize: 18,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: AppColors
+                                .primaryLight, // border color when not focused
+                            width: 2,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: AppColors
+                                .primaryLight, // border color when focused
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value != null) {
+                          if (value.length < 4) {
+                            return "Invalid Title";
+                          }
+                          return null;
                         }
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(height: 30),
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    TextFormField(
+                      cursorColor: AppColors.primaryLight,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.description,
+                        labelStyle: TextStyle(
+                          color: AppColors.primaryLight,
+                          fontSize: 18,
+                        ),
+
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: AppColors
+                                .primaryLight, // border color when not focused
+                            width: 2,
+                          ),
+                        ),
+
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: AppColors
+                                .primaryLight, // border color when focused
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                      maxLines: 4,
+                      controller: DescriptionController,
+                      validator: (value) {
+                        if (value != null) {
+                          if (value.length < 10) {
+                            return "Invalid Description";
+                          }
+                          return null;
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
+              Row(
+                children: [
+                  Icon(Icons.calendar_month, color: AppColors.blackColor),
+                  SizedBox(width: 20),
+
                   Text(
                     AppLocalizations.of(context)!.date,
-                    style: getBodyTextStyle(Color: AppColors.primaryLight),
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    cursorColor: AppColors.primaryLight,
-
-                    decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.primaryLight),
-                      ),
-                      suffixIcon: Icon(
-                        Icons.calendar_month,
-                        color: AppColors.primaryLight,
-                      ),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: themeProvider.appTheme == ThemeMode.light
+                          ? AppColors.blackColor
+                          : AppColors.primaryLight,
                     ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
                     onTap: () {
                       showDatePicker(
                         context: context,
@@ -103,46 +231,107 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           ).format(value);
                       });
                     },
-                    readOnly: true,
-                    controller: DateController,
-                    
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomButton(
-                        txt: AppLocalizations.of(context)!.addEvent,
-                        width: 150,
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            // Parse time using DateFormat
-                            DateFormat format = DateFormat("dd/MMM");
-
-                            EventModel NewEvent = EventModel(
-                              Id:
-                                  DateTime.now().toString() +
-                                  TitleController.text,
-                              Title: TitleController.text,
-                              Date: DateController.text,                              
-                            );
-
-                            eventsList.add(NewEvent);
-                            
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return HomePage();
-                                },
-                              ),
-                            );
-                          }
-                        },
+                    child: Text(
+                      AppLocalizations.of(context)!.chooseDate,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: AppColors.primaryLight,
                       ),
-                    ],
+                    ),
                   ),
                 ],
+              ),
+
+              SizedBox(height: 30),
+
+              Row(
+                children: [
+                  Icon(Icons.calendar_month, color: AppColors.blackColor),
+                  SizedBox(width: 20),
+
+                  Text(
+                    AppLocalizations.of(context)!.time,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: themeProvider.appTheme == ThemeMode.light
+                          ? AppColors.blackColor
+                          : AppColors.primaryLight,
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      ).then((value) {
+                        if (value != null)
+                          TimeController.text = value.format(context);
+                      });
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.chooseTime,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: AppColors.primaryLight,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 20),
+
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.primaryLight, width: 2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryLight,
+                        border: Border.all(color: AppColors.primaryLight),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        Icons.location_searching,
+                        color: AppColors.whiteColor,
+                      ),
+                    ),
+
+                    SizedBox(width: 20),
+                    Text(
+                      AppLocalizations.of(context)!.chooseLocation,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: AppColors.primaryLight,
+                      ),
+                    ),
+                    Spacer(),
+
+                    GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.primaryLight,
+                        size: 18,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+
+              CustomButton(
+                width: double.infinity,
+                txt: AppLocalizations.of(context)!.addEvent,
+                onPressed: () async {
+                },
               ),
             ],
           ),

@@ -176,6 +176,18 @@ abstract class AppLocalizations {
   /// **'Welcome'**
   String get welcome;
 
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'Jerusalem'**
+  String get city;
+
+  /// No description provided for @country.
+  ///
+  /// In en, this message translates to:
+  /// **'Palestine'**
+  String get country;
+
   /// No description provided for @all.
   ///
   /// In en, this message translates to:
@@ -218,6 +230,18 @@ abstract class AppLocalizations {
   /// **'Eating'**
   String get eating;
 
+  /// No description provided for @title.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get title;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Description'**
+  String get description;
+
   /// No description provided for @name.
   ///
   /// In en, this message translates to:
@@ -230,11 +254,41 @@ abstract class AppLocalizations {
   /// **'Event Date'**
   String get date;
 
+  /// No description provided for @time.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Time'**
+  String get time;
+
   /// No description provided for @addEvent.
   ///
   /// In en, this message translates to:
   /// **'Add Event'**
   String get addEvent;
+
+  /// No description provided for @chooseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Date'**
+  String get chooseDate;
+
+  /// No description provided for @chooseTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Time'**
+  String get chooseTime;
+
+  /// No description provided for @chooseLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Event Location'**
+  String get chooseLocation;
+
+  /// No description provided for @searchEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Event'**
+  String get searchEvent;
 
   /// No description provided for @enterTitle.
   ///
@@ -247,6 +301,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter date'**
   String get enterDate;
+
+  /// No description provided for @enterTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter time'**
+  String get enterTime;
 }
 
 class _AppLocalizationsDelegate

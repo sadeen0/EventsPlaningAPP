@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppThemeProvider extends ChangeNotifier{
-  ThemeMode appTheme = ThemeMode.dark;
+  ThemeMode appTheme = ThemeMode.light;
 
 
   void changeTheme(ThemeMode newTheme) {

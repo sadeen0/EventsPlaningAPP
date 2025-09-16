@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localization/core/utils/AppColors.dart';
 
-TextStyle getTitleTextStyle({double? fontSize, Color? Color, FontWeight? fontWeight} ){
+TextStyle getTitleTextStyle({double? fontSize, Color? Color, FontWeight? fontWeight, required Color color} ){
   return TextStyle(
     fontSize: fontSize ?? 30,
     color: Color?? AppColors.primaryLight,

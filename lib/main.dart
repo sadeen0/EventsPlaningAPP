@@ -5,28 +5,33 @@ import 'package:localization/core/theme/AppTheme.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Hive.initFlutter();
+  // Hive.registerAdapter(EventAdapter());
+  // await Hive.openBox<EventModel>("events");
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context)=> AppThemeProvider()),
-        ChangeNotifierProvider(create: (context)=> AppLanguageProvider()),
+        ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+        ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
       ],
       child: MainApp(),
-    )
-  ); 
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
-   MainApp({super.key});
+  MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var languageProvider = Provider.of<AppLanguageProvider>(context); // object of class 
-    var themeProvider = Provider.of<AppThemeProvider>(context); 
+    var languageProvider = Provider.of<AppLanguageProvider>(
+      context,
+    ); // object of class
+    var themeProvider = Provider.of<AppThemeProvider>(context);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -37,9 +42,7 @@ class MainApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       locale: Locale(languageProvider.appLanguage),
       initialRoute: '/',
-      routes: {
-        '/': (context) => HomePage(),
-      },
+      routes: {'/': (context) => HomePage()},
     );
   }
 }

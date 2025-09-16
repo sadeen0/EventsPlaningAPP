@@ -13,6 +13,8 @@ dependencies:
   flutter_gen: ^5.11.0
   flutter_localizations:
     sdk: flutter
+  google_maps_flutter: ^2.13.1
+  location: ^8.0.1
   hive_flutter: ^1.1.0
   intl: any
   provider: ^6.1.5+1

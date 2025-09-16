@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:localization/core/providers/appLanguage_Provider.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
-import 'package:localization/core/theme/AppTheme.dart';
 import 'package:localization/core/utils/AppColors.dart';
 import 'package:localization/core/widget/EventItemWidget.dart';
 import 'package:localization/l10n/app_localizations.dart';
@@ -35,51 +33,59 @@ class _HomeTabState extends State<HomeTab> {
       backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : Colors.black,
 
       appBar: AppBar(
+        toolbarHeight: 90,
         backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.welcome,
-                  style: TextStyle(fontSize: 16,
-                   color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,),
-                ),
-                SizedBox(height: 2),
-                Text(
-                  " Sadeen",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(Icons.sunny),
-                SizedBox(width: 12),
-                Container(
-                  padding: EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    AppLocalizations.of(context)!.lang,
-                    style: TextStyle(
-                      fontSize: 16,
+                  Text(
+                    AppLocalizations.of(context)!.welcome,
+                    style: TextStyle(fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryDark : AppColors.blackColor,
+                     color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    " Sadeen",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(Icons.sunny),
+                  SizedBox(width: 12),
+                  Container(
+                    padding: EdgeInsets.all(7),
+                    decoration: BoxDecoration(
+                      color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context)!.lang,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryDark : AppColors.blackColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       body: Column(
@@ -102,13 +108,14 @@ class _HomeTabState extends State<HomeTab> {
                     Icon(
                       Icons.location_on_outlined,
                       color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
-                      size: 24,
+                      size: 25,
                     ),
+                    SizedBox(width: 5),
                     Text(
-                      "Jerusalem, Palestine",
+                      "${AppLocalizations.of(context)!.city}، ${AppLocalizations.of(context)!.country}",
                       style: TextStyle(
                         color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,
-                        fontSize: 18,
+                        fontSize: 20,
                       ),
                     ),
                   ],

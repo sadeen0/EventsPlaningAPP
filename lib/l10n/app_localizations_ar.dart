@@ -45,7 +45,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profile => 'الملف الشخصي';
 
   @override
-  String get welcome => 'مرحباً بك ';
+  String get welcome => 'مرحباً  بك ';
+
+  @override
+  String get city => 'القدس';
+
+  @override
+  String get country => 'فلسطين';
 
   @override
   String get all => 'الكل';
@@ -69,17 +75,41 @@ class AppLocalizationsAr extends AppLocalizations {
   String get eating => 'الطعام';
 
   @override
+  String get title => 'عنوان الفعالية';
+
+  @override
+  String get description => 'وصف الفعالية';
+
+  @override
   String get name => 'اسم الفعالية';
 
   @override
   String get date => 'تاريخ الفعالية';
 
   @override
+  String get time => 'وقت الفعالية';
+
+  @override
   String get addEvent => 'إضافة فعالية';
+
+  @override
+  String get chooseDate => 'اختر التاريخ';
+
+  @override
+  String get chooseTime => 'اختر الوقت';
+
+  @override
+  String get chooseLocation => 'اختر موقع الفعالية';
+
+  @override
+  String get searchEvent => 'ابحث عن فعالية';
 
   @override
   String get enterTitle => 'الرجاء إدخال الاسم';
 
   @override
   String get enterDate => 'الرجاء إدخال التاريخ';
+
+  @override
+  String get enterTime => 'الرجاء إدخال الوقت';
 }
