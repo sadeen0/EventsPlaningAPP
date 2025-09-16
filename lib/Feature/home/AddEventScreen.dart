@@ -122,7 +122,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           : AppColors.primaryLight,
                       controller: TitleController,
                       decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.description,
+                        labelText: AppLocalizations.of(context)!.title,
                         labelStyle: TextStyle(
                           color: themeProvider.appTheme == ThemeMode.light
                               ? AppColors.blackColor
