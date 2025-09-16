@@ -8,9 +8,6 @@ import 'package:localization/core/widget/TapEvents.dart';
 import 'package:localization/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-
-
-
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({super.key});
 
@@ -56,7 +53,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
             : AppColors.primaryDark,
         title: Text(
           AppLocalizations.of(context)!.favorites,
-          style: getTitleTextStyle(
+          style: TextStyle(
             color: themeProvider.appTheme == ThemeMode.light
                 ? AppColors.whiteColor
                 : AppColors.primaryLight,
@@ -116,43 +113,73 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
               Padding(padding: const EdgeInsets.all(15)),
               Form(
+                key: formKey,
                 child: Column(
                   children: [
                     TextFormField(
-                      cursorColor: AppColors.primaryLight,
-                      readOnly: true,
+                      cursorColor: themeProvider.appTheme == ThemeMode.light
+                          ? AppColors.blackColor
+                          : AppColors.primaryLight,
                       controller: TitleController,
                       decoration: InputDecoration(
-                        suffixIcon: Icon(
-                          Icons.event,
-                          color: AppColors.primaryLight,
-                        ),
-                        labelText: AppLocalizations.of(context)!.title,
+                        labelText: AppLocalizations.of(context)!.description,
                         labelStyle: TextStyle(
-                          color: AppColors.primaryLight,
+                          color: themeProvider.appTheme == ThemeMode.light
+                              ? AppColors.blackColor
+                              : AppColors.primaryLight,
                           fontSize: 18,
                         ),
+
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                            color: AppColors
-                                .primaryLight, // border color when not focused
+                            color: themeProvider.appTheme == ThemeMode.light
+                                ? AppColors.blackColor
+                                : AppColors.primaryLight, 
                             width: 2,
                           ),
                         ),
+
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                            color: AppColors
-                                .primaryLight, // border color when focused
+                            color: themeProvider.appTheme == ThemeMode.light
+                                ? AppColors.blackColor
+                                : AppColors.primaryLight,
                             width: 2,
                           ),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: themeProvider.appTheme == ThemeMode.light
+                                ? AppColors.blackColor
+                                : AppColors.primaryLight,
+                            width: 2,
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: AppColors.primaryLight,
+                              width: 2),
+                        ),
+                        errorStyle: TextStyle(
+                          color: AppColors.redColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: TextStyle(
+                        color: themeProvider.appTheme == ThemeMode.light
+                            ? AppColors.blackColor
+                            : AppColors.primaryLight,
+                        fontSize: 18,
                       ),
                       validator: (value) {
                         if (value != null) {
-                          if (value.length < 4) {
-                            return "Invalid Title";
+                          if (value.length < 3) {
+                            return "Invalid Title, too short";
                           }
                           return null;
                         }
@@ -160,20 +187,24 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     ),
                     SizedBox(height: 30),
                     TextFormField(
-                      cursorColor: AppColors.primaryLight,
-                      readOnly: true,
+                      cursorColor: themeProvider.appTheme == ThemeMode.light
+                          ? AppColors.blackColor
+                          : AppColors.primaryLight,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.description,
                         labelStyle: TextStyle(
-                          color: AppColors.primaryLight,
+                          color: themeProvider.appTheme == ThemeMode.light
+                              ? AppColors.blackColor
+                              : AppColors.primaryLight,
                           fontSize: 18,
                         ),
 
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                            color: AppColors
-                                .primaryLight, // border color when not focused
+                            color: themeProvider.appTheme == ThemeMode.light
+                                ? AppColors.blackColor
+                                : AppColors.primaryLight, 
                             width: 2,
                           ),
                         ),
@@ -181,18 +212,45 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                            color: AppColors
-                                .primaryLight, // border color when focused
+                            color: themeProvider.appTheme == ThemeMode.light
+                                ? AppColors.blackColor
+                                : AppColors.primaryLight,
                             width: 2,
                           ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: themeProvider.appTheme == ThemeMode.light
+                                ? AppColors.blackColor
+                                : AppColors.primaryLight,
+                            width: 2,
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: AppColors.primaryLight,
+                              width: 2),
+                        ),
+                        errorStyle: TextStyle(
+                          color: AppColors.redColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       maxLines: 4,
                       controller: DescriptionController,
+                      style: TextStyle(
+                        color: themeProvider.appTheme == ThemeMode.light
+                            ? AppColors.blackColor
+                            : AppColors.primaryLight,
+                        fontSize: 18,
+                      ),
                       validator: (value) {
                         if (value != null) {
                           if (value.length < 10) {
-                            return "Invalid Description";
+                            return "Invalid Description, too short";
                           }
                           return null;
                         }
@@ -204,7 +262,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
               SizedBox(height: 30),
               Row(
                 children: [
-                  Icon(Icons.calendar_month, color: AppColors.blackColor),
+                  Icon(Icons.calendar_month, color: themeProvider.appTheme == ThemeMode.light ? AppColors.blackColor : AppColors.primaryLight),
                   SizedBox(width: 20),
 
                   Text(
@@ -246,7 +304,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
               Row(
                 children: [
-                  Icon(Icons.calendar_month, color: AppColors.blackColor),
+                  Icon(Icons.access_time, color: themeProvider.appTheme == ThemeMode.light ? AppColors.blackColor : AppColors.primaryLight),
                   SizedBox(width: 20),
 
                   Text(
@@ -300,7 +358,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ),
                       child: Icon(
                         Icons.location_searching,
-                        color: AppColors.whiteColor,
+                        color: themeProvider.appTheme == ThemeMode.light
+                            ? AppColors.whiteColor
+                            : AppColors.primaryDark,
                       ),
                     ),
 
@@ -331,6 +391,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 width: double.infinity,
                 txt: AppLocalizations.of(context)!.addEvent,
                 onPressed: () async {
+                  if (formKey.currentState!.validate()) {
+                    print("Valid");
+                  } else {
+                    print("Not Valid");
+                  }
                 },
               ),
             ],
