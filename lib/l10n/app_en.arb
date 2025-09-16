@@ -1,0 +1,21 @@
+{
+    "lg" : "Language",
+    "ar" : "Arabic",
+    "en" : "English",
+    "dark" : "Dark Mode",
+    "light" : "Light Mode",
+    "theme" : "Theme",
+    "appTitle" : "Event Planing",
+    "home" : "Home",
+    "map" : "Map",
+    "favorites" : "Favorites",
+    "profile" : "Profile",
+    "welcome" : "Welcome",
+    "all": "All",
+    "sports": "Sports",
+    "birthday": "Birthday",
+    "games": "Games",
+    "meeting": "Meeting",
+    "workshop": "Workshop",
+    "eating": "Eating"
+}
