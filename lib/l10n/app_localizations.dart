@@ -146,6 +146,48 @@ abstract class AppLocalizations {
   /// **'Event Planing'**
   String get appTitle;
 
+  /// No description provided for @personName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get personName;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @enterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Your Name'**
+  String get enterName;
+
+  /// No description provided for @enterEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Your Email'**
+  String get enterEmail;
+
+  /// No description provided for @enterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Your Password'**
+  String get enterPassword;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
   /// No description provided for @home.
   ///
   /// In en, this message translates to:
@@ -161,7 +203,7 @@ abstract class AppLocalizations {
   /// No description provided for @favorites.
   ///
   /// In en, this message translates to:
-  /// **'Favorites'**
+  /// **'Favorite'**
   String get favorites;
 
   /// No description provided for @profile.

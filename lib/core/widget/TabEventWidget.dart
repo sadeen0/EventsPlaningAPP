@@ -12,7 +12,6 @@ class TapEventWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var languageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),

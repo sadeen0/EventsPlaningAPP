@@ -33,13 +33,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Event Planing';
 
   @override
+  String get personName => 'Name';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get enterName => 'Enter Your Name';
+
+  @override
+  String get enterEmail => 'Enter Your Email';
+
+  @override
+  String get enterPassword => 'Enter Your Password';
+
+  @override
+  String get done => 'Done';
+
+  @override
   String get home => 'Home';
 
   @override
   String get map => 'Map';
 
   @override
-  String get favorites => 'Favorites';
+  String get favorites => 'Favorite';
 
   @override
   String get profile => 'Profile';

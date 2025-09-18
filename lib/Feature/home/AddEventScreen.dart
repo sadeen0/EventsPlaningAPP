@@ -170,6 +170,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      
                       style: TextStyle(
                         color: themeProvider.appTheme == ThemeMode.light
                             ? AppColors.blackColor

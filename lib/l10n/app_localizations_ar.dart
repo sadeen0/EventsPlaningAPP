@@ -33,6 +33,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appTitle => 'تخطيط الفعاليات';
 
   @override
+  String get personName => 'الاسم';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get enterName => 'ادخل اسمك';
+
+  @override
+  String get enterEmail => 'ادخل بريدك الإلكتروني';
+
+  @override
+  String get enterPassword => 'ادخل كلمة المرور';
+
+  @override
+  String get done => 'تم';
+
+  @override
   String get home => 'الرئيسية';
 
   @override

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:localization/Feature/Log%20In/logInPage.dart';
 import 'package:localization/Feature/home/homePage.dart';
 import 'package:localization/core/providers/appLanguage_Provider.dart';
 import 'package:localization/core/theme/AppTheme.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Hive.initFlutter();
-  // Hive.registerAdapter(EventAdapter());
-  // await Hive.openBox<EventModel>("events");
+  WidgetsFlutterBinding.ensureInitialized();
+   await Hive.initFlutter();
+   await Hive.openBox("user");
 
   runApp(
     MultiProvider(
@@ -42,7 +43,7 @@ class MainApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       locale: Locale(languageProvider.appLanguage),
       initialRoute: '/',
-      routes: {'/': (context) => HomePage()},
+      routes: {'/': (context) => LoginPage()},
     );
   }
 }
