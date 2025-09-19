@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localization/Feature/Log%20In/logInPage.dart';
+import 'package:localization/Feature/home/AddEventScreen.dart';
 import 'package:localization/Feature/home/homePage.dart';
 import 'package:localization/core/providers/appLanguage_Provider.dart';
 import 'package:localization/core/theme/AppTheme.dart';
@@ -26,6 +27,7 @@ void main() async {
 
 class MainApp extends StatelessWidget {
   MainApp({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +44,12 @@ class MainApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       locale: Locale(languageProvider.appLanguage),
-      initialRoute: '/',
-      routes: {'/': (context) => LoginPage()},
+      initialRoute: '/login',
+      routes: {
+        '/': (context) => HomePage(),
+        '/login': (context) => LoginPage(),
+        '/addevent': (context) => AddEventPage(),
+        },
     );
   }
 }

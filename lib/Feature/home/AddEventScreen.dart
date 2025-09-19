@@ -7,14 +7,14 @@ import 'package:localization/core/widget/TapEvents.dart';
 import 'package:localization/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class AddEventScreen extends StatefulWidget {
-  const AddEventScreen({super.key});
+class AddEventPage extends StatefulWidget {
+  const AddEventPage({super.key});
 
   @override
-  State<AddEventScreen> createState() => _AddEventScreenState();
+  State<AddEventPage> createState() => _AddEventPageState();
 }
 
-class _AddEventScreenState extends State<AddEventScreen> {
+class _AddEventPageState extends State<AddEventPage> {
   int selectedIndex = 0;
   var formKey = GlobalKey<FormState>();
   var TitleController = TextEditingController();
