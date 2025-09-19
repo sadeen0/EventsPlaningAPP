@@ -180,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (value!.isEmpty) {
                           return "Email is required";
                         } else if (!RegExp(
-                          '^[a-z]{2,8}@[a-z]{2,8}\.[a-z]{2,5}',
+                          r'^[a-zA-Z]{2,8}@[a-z]{2,8}\.[a-z]{2,5}',
                         ).hasMatch(value)) {
                           return "Email must be in the format: name@domain.com";
                         }

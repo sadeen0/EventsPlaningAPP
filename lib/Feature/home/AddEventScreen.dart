@@ -81,7 +81,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               DefaultTabController(
                 length: events.length,
                 child: TabBar(
@@ -111,7 +111,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 ),
               ),
 
-              Padding(padding: const EdgeInsets.all(15)),
+              Padding(padding: const EdgeInsets.only(top: 15)),
               Form(
                 key: formKey,
                 child: Column(
@@ -186,7 +186,8 @@ class _AddEventPageState extends State<AddEventPage> {
                         }
                       },
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 15),
+                    
                     TextFormField(
                       cursorColor: themeProvider.appTheme == ThemeMode.light
                           ? AppColors.blackColor
@@ -240,7 +241,7 @@ class _AddEventPageState extends State<AddEventPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      maxLines: 4,
+                      maxLines: 3,
                       controller: DescriptionController,
                       style: TextStyle(
                         color: themeProvider.appTheme == ThemeMode.light
@@ -260,7 +261,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 15),
               Row(
                 children: [
                   Icon(Icons.calendar_month, color: themeProvider.appTheme == ThemeMode.light ? AppColors.blackColor : AppColors.primaryLight),
