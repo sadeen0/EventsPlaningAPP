@@ -207,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                         } else if (!RegExp(
                           '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}\$',
                         ).hasMatch(value)) {
-                          return "Password must be at least 8 characters long and contain at least one letter and one number";
+                          return "Password must be 8+ chars with letters & numbers";
                         }
                         return null;
                       },
