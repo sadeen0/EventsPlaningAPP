@@ -8,11 +8,14 @@ import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   await Hive.initFlutter();
-   await Hive.openBox("user");
+   await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+   );
 
   runApp(
     MultiProvider(
@@ -44,7 +47,7 @@ class MainApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       locale: Locale(languageProvider.appLanguage),
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
         '/login': (context) => LoginPage(),

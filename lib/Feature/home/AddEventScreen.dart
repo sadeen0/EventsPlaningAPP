@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:localization/Model/EventModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
 import 'package:localization/core/utils/CustomButton.dart';
+import 'package:localization/core/utils/FirebaseUtils.dart';
 import 'package:localization/core/widget/TapEvents.dart';
 import 'package:localization/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -19,19 +21,15 @@ class _AddEventPageState extends State<AddEventPage> {
   var formKey = GlobalKey<FormState>();
   var TitleController = TextEditingController();
   var DescriptionController = TextEditingController();
-  var DateController = TextEditingController(
-    text: DateFormat("dd/MMM").format(DateTime.now()),
-  );
-
-  var TimeController = TextEditingController(
-    text: DateFormat("HH:mm").format(DateTime.now()),
-  );
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
+  String selectedEvent = '';
 
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
 
-    List<String> events = [
+    List<String> eventsNameList = [
       AppLocalizations.of(context)!.all,
       AppLocalizations.of(context)!.sports,
       AppLocalizations.of(context)!.birthday,
@@ -83,11 +81,12 @@ class _AddEventPageState extends State<AddEventPage> {
               ),
               SizedBox(height: 10),
               DefaultTabController(
-                length: events.length,
+                length: eventsNameList.length,
                 child: TabBar(
                   onTap: (index) {
                     setState(() {
                       selectedIndex = index;
+                      selectedEvent = eventsNameList[index];
                     });
                   },
                   indicatorColor: AppColors.transparentColor,
@@ -100,11 +99,11 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                   tabAlignment: TabAlignment.start,
 
-                  tabs: events.map((eventName) {
+                  tabs: eventsNameList.map((eventName) {
                     return Tab(
                       child: TapEvents(
                         eventName: eventName,
-                        isSelected: selectedIndex == events.indexOf(eventName),
+                        isSelected: selectedIndex == eventsNameList.indexOf(eventName),
                       ),
                     );
                   }).toList(),
@@ -278,31 +277,50 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                   Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      showDatePicker(
+                    onTap: () async{
+                      DateTime? pickedDate = await showDatePicker(
                         context: context,
-                        firstDate: DateTime.now(),
                         initialDate: DateTime.now(),
-                        lastDate: DateTime(2026),
-                      ).then((value) {
-                        if (value != null)
-                          DateController.text = DateFormat(
-                            "dd/MMM",
-                          ).format(value);
-                      });
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(Duration(days: 365)),
+                      );
+                      if (pickedDate != null) {
+                        setState(() {
+                          selectedDate = pickedDate;
+                        });
+                      }
+                      // showDatePicker(
+                      //   context: context, 
+                      //   firstDate: DateTime.now(),
+                      //   initialDate: DateTime.now(),
+                      //   lastDate: DateTime(2026),
+                      // ).then((value) {
+                      //   if (value != null)
+                      //     DateController.text = DateFormat(
+                      //       "dd/MMM",
+                      //     ).format(value);
+                      // });
                     },
-                    child: Text(
-                      AppLocalizations.of(context)!.chooseDate,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: AppColors.primaryLight,
-                      ),
-                    ),
+                    child: selectedDate == null
+                        ? Text(
+                            AppLocalizations.of(context)!.chooseDate,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: AppColors.primaryLight,
+                            ),
+                          )
+                            : Text(
+                                '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: AppColors.primaryLight,
+                                ),
+                              ), 
                   ),
                 ],
               ),
 
-              SizedBox(height: 30),
+              SizedBox(height: 25),
 
               Row(
                 children: [
@@ -320,22 +338,32 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                   Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      showTimePicker(
-                        context: context,
+                    onTap: () async {
+                      var chooseTime = await showTimePicker(
+                        context: context, 
                         initialTime: TimeOfDay.now(),
-                      ).then((value) {
-                        if (value != null)
-                          TimeController.text = value.format(context);
+                      );
+                      setState(() {
+                        selectedTime = chooseTime;
                       });
+                      
                     },
-                    child: Text(
-                      AppLocalizations.of(context)!.chooseTime,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: AppColors.primaryLight,
-                      ),
-                    ),
+
+                    child: selectedTime == null
+                        ? Text(
+                            AppLocalizations.of(context)!.chooseTime,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: AppColors.primaryLight,
+                            ),
+                          )
+                            : Text(
+                                selectedTime!.format(context),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: AppColors.primaryLight,
+                                ),
+                              ), 
                   ),
                 ],
               ),
@@ -394,9 +422,8 @@ class _AddEventPageState extends State<AddEventPage> {
                 txt: AppLocalizations.of(context)!.addEvent,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    print("Valid");
-                  } else {
-                    print("Not Valid");
+                    await AddEvent();
+                    Navigator.pushNamed(context, '/');
                   }
                 },
               ),
@@ -406,4 +433,21 @@ class _AddEventPageState extends State<AddEventPage> {
       ),
     );
   }
+
+  Future<void> AddEvent() async{
+      var event = EventModel(
+        title: TitleController.text,
+        description: DescriptionController.text,
+        dateTime: selectedDate!,
+        time: selectedTime!.format(context), 
+        eventName: selectedEvent,
+      );
+
+    try{
+      await FirebaseUtils.addEventToFirestore(event);
+    }
+    catch(e){
+      print("Error adding event : $e");
+    }
+}
 }

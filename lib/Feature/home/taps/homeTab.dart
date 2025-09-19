@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localization/Model/EventModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
+import 'package:localization/core/utils/FirebaseUtils.dart';
 import 'package:localization/core/widget/EventItemWidget.dart';
 import 'package:localization/l10n/app_localizations.dart';
 import 'package:localization/core/widget/TabEventWidget.dart';
 import 'package:provider/provider.dart';
+import 'dart:developer';
+
 
 class HomeTab extends StatefulWidget {
   HomeTab({super.key});
@@ -15,12 +20,44 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   int selectedIndex = 0;
+  List eventsList = [];
+  
+  void getAllEvents() async {
+    QuerySnapshot<EventModel> query = await FirebaseUtils.getEventCollection().limit(3).orderBy("dateTime", descending: false).get(); // get collection
+    eventsList = query.docs.map((doc){
+      return doc.data();
+    }
+    ).toList();
+    log(eventsList.length.toString());
+    setState(() {
+      
+    });
+  }
+
+  void getFilteredEvents(String filterEvent) async {
+    Query<EventModel> query = await FirebaseUtils.getEventCollection(); // get collection
+    if(filterEvent != 'All'){
+      query = query.where("eventName", isEqualTo: filterEvent);
+    }
+
+    var event = await query.get();
+    eventsList = event.docs.map( (docs){
+      return docs.data();
+    }).toList();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllEvents();
+  }
 
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
 
-    List<String> events = [
+    List<String> eventsNameList = [
       AppLocalizations.of(context)!.all,
       AppLocalizations.of(context)!.sports,
       AppLocalizations.of(context)!.birthday,
@@ -33,7 +70,7 @@ class _HomeTabState extends State<HomeTab> {
       backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : Colors.black,
 
       appBar: AppBar(
-        toolbarHeight: 90,
+        toolbarHeight: 80,
         backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark,
         title: Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -122,11 +159,12 @@ class _HomeTabState extends State<HomeTab> {
                 ),
                 SizedBox(height: 15),
                 DefaultTabController(
-                  length: events.length,
+                  length: eventsNameList.length,
                   child: TabBar(
                     onTap: (index) {
                       setState(() {
                         selectedIndex = index;
+                        getFilteredEvents(eventsNameList[index]);
                       });
                     },
                     indicatorColor: AppColors.transparentColor,
@@ -139,12 +177,12 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                     tabAlignment: TabAlignment.start,
 
-                    tabs: events.map((eventName) {
+                    tabs: eventsNameList.map((eventName) {
                       return Tab(
                         child: TapEventWidget(
                           eventName: eventName,
                           isSelected:
-                              selectedIndex == events.indexOf(eventName),
+                              selectedIndex == eventsNameList.indexOf(eventName),
                         ),
                       );
                     }).toList(),
@@ -155,14 +193,34 @@ class _HomeTabState extends State<HomeTab> {
           ),
           SizedBox(height: 10),
           Expanded(
-            child: ListView.builder(
+            child: eventsList.isEmpty
+            ? Center(
+              child: Text("No events Yet",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: themeProvider.appTheme == ThemeMode.light ? AppColors.blackColor : AppColors.primaryLight,
+              ),
+              ),
+            )
+            : ListView.builder(
               padding: EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 10
               ),
-              itemCount: 3,
+              itemCount: eventsList.length,
               itemBuilder: (context, index) {
-                return EventItemWidget();
+                return EventItemWidget(
+                  event: eventsList[index],
+                  onFavoriteToggle: () async {
+                    final newFavoriteStatus = !eventsList[index].isFavorite;
+                    await FirebaseUtils.updateFavorite(eventsList[index].id, newFavoriteStatus);
+                    setState(() {
+                      eventsList[index].isFavorite = newFavoriteStatus;
+                    });
+                  },
+                  
+                );
               },
             ),
           ),
