@@ -503,19 +503,6 @@ class _EditEventPageState extends State<EditEventPage> {
                     width: 150,
                     txt: AppLocalizations.of(context)!.deleteEvent,
                     onPressed: () async {
-                      widget.event.title = TitleController.text;
-                      widget.event.description = DescriptionController.text;
-                      // widget.event.dateTime = selectedDate!;
-                      // widget.event.time = selectedTime!.format(context);
-                      widget.event.dateTime = DateTime(
-                        selectedDate!.year,
-                        selectedDate!.month,
-                        selectedDate!.day,
-                        selectedTime!.hour,
-                        selectedTime!.minute,
-                      );
-                      widget.event.eventName = selectedEvent;
-
                       // show confirmation dialog
                       bool? confirm = await showDialog<bool>(
                         context: context,

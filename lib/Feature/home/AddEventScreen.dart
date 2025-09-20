@@ -442,17 +442,15 @@ class _AddEventPageState extends State<AddEventPage> {
   }
 
   Future<void> AddEvent() async {
-    if (selectedDate == null || selectedTime == null) {
-      print("Date or Time not selected");
-      return;
-    }
+    final date = selectedDate ?? DateTime.now();
+    final time = selectedTime ?? TimeOfDay(hour: 0, minute: 0);
 
     final fullDateTime = DateTime(
-      selectedDate!.year,
-      selectedDate!.month,
-      selectedDate!.day,
-      selectedTime!.hour,
-      selectedTime!.minute,
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
     );
 
     var event = EventModel(
