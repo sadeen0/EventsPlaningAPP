@@ -195,9 +195,9 @@ class _HomeTabState extends State<HomeTab> {
           Expanded(
             child: eventsList.isEmpty
             ? Center(
-              child: Text("No events Yet",
+              child: Text(AppLocalizations.of(context)!.noEvents,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: themeProvider.appTheme == ThemeMode.light ? AppColors.blackColor : AppColors.primaryLight,
               ),

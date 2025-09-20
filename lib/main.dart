@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localization/Feature/Log%20In/logInPage.dart';
 import 'package:localization/Feature/home/AddEventScreen.dart';
+import 'package:localization/Feature/home/EditEvent.dart';
 import 'package:localization/Feature/home/homePage.dart';
 import 'package:localization/core/providers/appLanguage_Provider.dart';
 import 'package:localization/core/theme/AppTheme.dart';

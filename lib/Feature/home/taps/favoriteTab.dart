@@ -60,9 +60,9 @@ class _FavoriteTabState extends State<FavoriteTab> {
         ),
       ),
       body: eventsList.isEmpty
-          ? Center(child: Text("No favorite events yet.",
+          ? Center(child: Text(AppLocalizations.of(context)!.noFavoriteEvents,
           style: TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: themeProvider.appTheme == ThemeMode.light ? AppColors.blackColor : AppColors.primaryLight,
               ),))

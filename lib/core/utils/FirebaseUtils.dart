@@ -30,5 +30,15 @@ class FirebaseUtils {
   return getEventCollection().where("isFavorite", isEqualTo: true);
 }
 
+  static Future<void> updateEventInFirestore(EventModel event) async {
+    var collectionRef = getEventCollection();
+    await collectionRef.doc(event.id).update(event.ToFirestore());
+  }
+
+  static Future<void> DeleteEventFromFirestore(EventModel event) async {
+    var collectionRef = getEventCollection();
+    await collectionRef.doc(event.id).delete();
+  }
+
 
 }

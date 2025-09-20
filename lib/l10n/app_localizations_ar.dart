@@ -114,6 +114,54 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addEvent => 'إضافة فعالية';
 
   @override
+  String get editEvent => 'تعديل الفعالية';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get selectCategory => 'اختر الفئة';
+
+  @override
+  String get eventAdded => 'تمت إضافة الفعالية بنجاح';
+
+  @override
+  String get eventUpdated => 'تم تحديث الفعالية بنجاح';
+
+  @override
+  String get noEvents => 'لا توجد فعاليات حتى الآن';
+
+  @override
+  String get noFavoriteEvents => 'لا توجد فعاليات مفضلة حتى الآن.';
+
+  @override
+  String get deleteEvent => 'حذف ';
+
+  @override
+  String get confirmDelete => 'هل أنت متأكد أنك تريد حذف هذه الفعالية؟';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get no => 'لا';
+
+  @override
+  String get error => 'خطأ';
+
+  @override
+  String get eventDeleted => 'تم حذف الفعالية بنجاح';
+
+  @override
+  String get noEventsFound => 'لم يتم العثور على فعاليات.';
+
+  @override
+  String get loading => 'جار التحميل...';
+
+  @override
   String get chooseDate => 'اختر التاريخ';
 
   @override

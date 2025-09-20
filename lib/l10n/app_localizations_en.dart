@@ -114,6 +114,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addEvent => 'Add Event';
 
   @override
+  String get editEvent => 'Edit Event';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get selectCategory => 'Select Category';
+
+  @override
+  String get eventAdded => 'Event added successfully';
+
+  @override
+  String get eventUpdated => 'Event updated successfully';
+
+  @override
+  String get noEvents => 'No events Yet';
+
+  @override
+  String get noFavoriteEvents => 'No favorite events yet.';
+
+  @override
+  String get deleteEvent => 'Delete';
+
+  @override
+  String get confirmDelete => 'Are you sure you want to delete this event?';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get eventDeleted => 'Event deleted successfully';
+
+  @override
+  String get noEventsFound => 'No events found.';
+
+  @override
+  String get loading => 'Loading...';
+
+  @override
   String get chooseDate => 'Choose Date';
 
   @override

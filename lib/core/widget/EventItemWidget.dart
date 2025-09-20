@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:localization/Feature/home/EditEvent.dart';
 import 'package:localization/Model/EventModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
@@ -86,10 +89,18 @@ class EventItemWidget extends StatelessWidget {
                   ),
                 ),
                 Spacer(),
-                Icon( Icons.edit,
+
+                IconButton(
+                  onPressed: () async {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditEventPage(event: event)));
+                  },
+                  
+                  icon:Icon( Icons.edit,
                   color: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark,
+                   ),
+                   
                 ),
-                SizedBox(width: 10,),
+
                 
                  IconButton(
                   onPressed: () async {
