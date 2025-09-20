@@ -25,7 +25,7 @@ class _EditEventPageState extends State<EditEventPage> {
   final DateFormat timeFormat = DateFormat("hh:mm a");
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
-  String selectedEvent = '';
+  EventType selectedEvent = EventType.all;
 
   @override
   void initState() {
@@ -36,33 +36,40 @@ class _EditEventPageState extends State<EditEventPage> {
     );
     selectedDate = widget.event.dateTime;
     selectedEvent = widget.event.eventName;
-    try {
-      if (widget.event.time.isNotEmpty) {
-        final parsedDate = timeFormat.parse(widget.event.time);
-        selectedTime = TimeOfDay.fromDateTime(parsedDate);
-      }
-    } catch (e) {
-      selectedTime = TimeOfDay.now();
-    }
+    selectedTime = TimeOfDay(
+      hour: widget.event.dateTime.hour,
+      minute: widget.event.dateTime.minute,
+    );
+    // try {
+    //   if (widget.event.time.isNotEmpty) {
+    //     final parsedDate = timeFormat.parse(widget.event.time);
+    //     selectedTime = TimeOfDay.fromDateTime(parsedDate);
+    //   }
+    // } catch (e) {
+    //   selectedTime = TimeOfDay.now();
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
+    List<EventType> eventsTypeList = EventType.values;
+    // List<EventType> eventsNameList = [
+    //   AppLocalizations.of(context)!.all,
+    //   AppLocalizations.of(context)!.sports,
+    //   AppLocalizations.of(context)!.birthday,
+    //   AppLocalizations.of(context)!.games,
+    //   AppLocalizations.of(context)!.meeting,
+    //   AppLocalizations.of(context)!.workshop,
+    //   AppLocalizations.of(context)!.eating,
+    // ];
 
-    List<String> eventsNameList = [
-      AppLocalizations.of(context)!.all,
-      AppLocalizations.of(context)!.sports,
-      AppLocalizations.of(context)!.birthday,
-      AppLocalizations.of(context)!.games,
-      AppLocalizations.of(context)!.meeting,
-      AppLocalizations.of(context)!.workshop,
-      AppLocalizations.of(context)!.eating,
-    ];
-
-    int index = eventsNameList.indexOf(selectedEvent);
-    selectedIndex = index != -1 ? index : 0; 
-    selectedEvent = eventsNameList[selectedIndex]; 
+    // int index = eventsNameList.indexOf(selectedEvent);
+    // selectedIndex = index != -1 ? index : 0;
+    // selectedEvent = eventsNameList[selectedIndex];
+    int index = eventsTypeList.indexOf(selectedEvent);
+    selectedIndex = index != -1 ? index : 0;
+    selectedEvent = eventsTypeList[selectedIndex];
 
     return Scaffold(
       backgroundColor: themeProvider.appTheme == ThemeMode.light
@@ -116,12 +123,12 @@ class _EditEventPageState extends State<EditEventPage> {
               SizedBox(height: 20),
               DefaultTabController(
                 //initialIndex: index,
-                length: eventsNameList.length,
+                length: eventsTypeList.length,
                 child: TabBar(
                   onTap: (index) {
                     setState(() {
                       selectedIndex = index;
-                      selectedEvent = eventsNameList[index];
+                      selectedEvent = eventsTypeList[index];
                     });
                   },
                   indicatorColor: AppColors.transparentColor,
@@ -134,12 +141,12 @@ class _EditEventPageState extends State<EditEventPage> {
                   ),
                   tabAlignment: TabAlignment.start,
 
-                  tabs: eventsNameList.map((eventName) {
+                  tabs: eventsTypeList.map((eventName) {
                     return Tab(
                       child: TapEvents(
-                        eventName: eventName,
+                        eventName: getEventLabel(context, eventName),
                         isSelected:
-                            selectedIndex == eventsNameList.indexOf(eventName),
+                            selectedIndex == eventsTypeList.indexOf(eventName),
                       ),
                     );
                   }).toList(),
@@ -323,7 +330,7 @@ class _EditEventPageState extends State<EditEventPage> {
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                         context: context,
-                        initialDate: DateTime.now(),
+                        initialDate: selectedDate ?? DateTime.now(),
                         firstDate: DateTime.now(),
                         lastDate: DateTime.now().add(Duration(days: 365)),
                       );
@@ -378,7 +385,7 @@ class _EditEventPageState extends State<EditEventPage> {
                     onTap: () async {
                       var chooseTime = await showTimePicker(
                         context: context,
-                        initialTime: TimeOfDay.now(),
+                        initialTime: selectedTime ?? TimeOfDay.now(),
                       );
                       setState(() {
                         selectedTime = chooseTime;
@@ -461,10 +468,28 @@ class _EditEventPageState extends State<EditEventPage> {
                     txt: AppLocalizations.of(context)!.save,
 
                     onPressed: () async {
+                      if (selectedDate == null || selectedTime == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Please choose date and time"),
+                            backgroundColor: AppColors.redColor,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        return;
+                      }
                       widget.event.title = TitleController.text;
                       widget.event.description = DescriptionController.text;
-                      widget.event.dateTime = selectedDate!;
-                      widget.event.time = selectedTime!.format(context);
+                      widget.event.dateTime = DateTime(
+                        selectedDate!.year,
+                        selectedDate!.month,
+                        selectedDate!.day,
+                        selectedTime!.hour,
+                        selectedTime!.minute,
+                      );
+
+                      // widget.event.dateTime = selectedDate!;
+                      // widget.event.time = selectedTime!.format(context);
                       widget.event.eventName = selectedEvent;
 
                       if (formKey.currentState!.validate()) {
@@ -480,8 +505,15 @@ class _EditEventPageState extends State<EditEventPage> {
                     onPressed: () async {
                       widget.event.title = TitleController.text;
                       widget.event.description = DescriptionController.text;
-                      widget.event.dateTime = selectedDate!;
-                      widget.event.time = selectedTime!.format(context);
+                      // widget.event.dateTime = selectedDate!;
+                      // widget.event.time = selectedTime!.format(context);
+                      widget.event.dateTime = DateTime(
+                        selectedDate!.year,
+                        selectedDate!.month,
+                        selectedDate!.day,
+                        selectedTime!.hour,
+                        selectedTime!.minute,
+                      );
                       widget.event.eventName = selectedEvent;
 
                       // show confirmation dialog
@@ -510,21 +542,19 @@ class _EditEventPageState extends State<EditEventPage> {
                                   AppLocalizations.of(context)!.cancel,
                                 ),
                               ),
-                              
                             ],
                           );
                         },
                       );
                       if (confirm == true) {
-
                         await DeleteEvent();
                         ScaffoldMessenger.of(context).showSnackBar(
-                          
                           SnackBar(
-                            content: Text(AppLocalizations.of(context)!.eventDeleted),
+                            content: Text(
+                              AppLocalizations.of(context)!.eventDeleted,
+                            ),
                             duration: Duration(seconds: 3),
                             backgroundColor: AppColors.greenColor,
-
                           ),
                         );
                         Navigator.pop(context, widget.event);
@@ -541,11 +571,20 @@ class _EditEventPageState extends State<EditEventPage> {
   }
 
   Future<void> EditEvent() async {
+    final fullDateTime = DateTime(
+      selectedDate!.year,
+      selectedDate!.month,
+      selectedDate!.day,
+      selectedTime!.hour,
+      selectedTime!.minute,
+    );
+
+    widget.event.dateTime = fullDateTime;
     var event = EventModel(
       title: TitleController.text,
       description: DescriptionController.text,
-      dateTime: selectedDate!,
-      time: selectedTime!.format(context),
+      dateTime: fullDateTime,
+      // time: selectedTime!.format(context),
       eventName: selectedEvent,
     );
 
@@ -557,10 +596,41 @@ class _EditEventPageState extends State<EditEventPage> {
   }
 
   Future<void> DeleteEvent() async {
+    if (selectedDate == null || selectedTime == null) {
+      print("Date or Time not selected");
+      return;
+    }
+
+    final fullDateTime = DateTime(
+      selectedDate!.year,
+      selectedDate!.month,
+      selectedDate!.day,
+      selectedTime!.hour,
+      selectedTime!.minute,
+    );
     try {
       await FirebaseUtils.DeleteEventFromFirestore(widget.event);
     } catch (e) {
       print("Error deleting event : $e");
+    }
+  }
+
+  String getEventLabel(BuildContext context, EventType type) {
+    switch (type) {
+      case EventType.all:
+        return AppLocalizations.of(context)!.all;
+      case EventType.sports:
+        return AppLocalizations.of(context)!.sports;
+      case EventType.birthday:
+        return AppLocalizations.of(context)!.birthday;
+      case EventType.games:
+        return AppLocalizations.of(context)!.games;
+      case EventType.meeting:
+        return AppLocalizations.of(context)!.meeting;
+      case EventType.workshop:
+        return AppLocalizations.of(context)!.workshop;
+      case EventType.eating:
+        return AppLocalizations.of(context)!.eating;
     }
   }
 }

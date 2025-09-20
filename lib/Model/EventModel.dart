@@ -1,3 +1,5 @@
+enum EventType { all, sports, birthday, games, meeting, workshop, eating }
+
 class EventModel {
   static const String collectionName = 'events';
 
@@ -5,46 +7,49 @@ class EventModel {
   String title;
   String description;
   DateTime dateTime;
-  String time;
+  // String time;
   //String location;
   bool isFavorite;
-  String eventName;
+  EventType eventName;
 
-EventModel({
-  this.id = '',
-  required this.title,
-  required this.description,
-  required this.dateTime,
-  required this.time,
-  //required this.location,
-  this.isFavorite = false,
-  required this.eventName,
-});
+  EventModel({
+    this.id = '',
+    required this.title,
+    required this.description,
+    required this.dateTime,
+    // required this.time,
+    //required this.location,
+    this.isFavorite = false,
+    required this.eventName,
+  });
 
-// object to json(map)
+  // object to json(map)
   Map<String, dynamic> ToFirestore() {
     return {
       'id': id,
       'title': title,
       'description': description,
       'dateTime': dateTime.millisecondsSinceEpoch,
-      'time': time,
+      // 'time': time,
       //'location': location,
       'isFavorite': isFavorite,
-      'eventName': eventName,
+      'eventName': eventName.name,
     };
   }
-// From json to object
+
+  // From json to object
   EventModel.fromFirestore(Map<String, dynamic> data)
-      : this (
+    : this(
         id: data['id'],
         title: data['title'],
         description: data['description'],
         dateTime: DateTime.fromMillisecondsSinceEpoch(data['dateTime']),
-        time: data['time'],
+        // time: data['time'],
         //location: data['location'],
         isFavorite: data['isFavorite'],
-        eventName: data['eventName'],
+        eventName: EventType.values.firstWhere(
+          (e) => e.name == data['eventName'],
+          orElse: () => EventType.all,
+        ),
       );
-
 }

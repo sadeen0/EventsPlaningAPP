@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:localization/Model/EventModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
@@ -23,21 +24,13 @@ class _AddEventPageState extends State<AddEventPage> {
   var DescriptionController = TextEditingController();
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
-  String selectedEvent = '';
+  EventType selectedEvent = EventType.all;
 
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
 
-    List<String> eventsNameList = [
-      AppLocalizations.of(context)!.all,
-      AppLocalizations.of(context)!.sports,
-      AppLocalizations.of(context)!.birthday,
-      AppLocalizations.of(context)!.games,
-      AppLocalizations.of(context)!.meeting,
-      AppLocalizations.of(context)!.workshop,
-      AppLocalizations.of(context)!.eating,
-    ];
+    List<EventType> eventsTypeList = EventType.values;
 
     return Scaffold(
       backgroundColor: themeProvider.appTheme == ThemeMode.light
@@ -81,12 +74,12 @@ class _AddEventPageState extends State<AddEventPage> {
               ),
               SizedBox(height: 10),
               DefaultTabController(
-                length: eventsNameList.length,
+                length: eventsTypeList.length,
                 child: TabBar(
                   onTap: (index) {
                     setState(() {
                       selectedIndex = index;
-                      selectedEvent = eventsNameList[index];
+                      selectedEvent = eventsTypeList[index];
                     });
                   },
                   indicatorColor: AppColors.transparentColor,
@@ -99,11 +92,12 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                   tabAlignment: TabAlignment.start,
 
-                  tabs: eventsNameList.map((eventName) {
+                  tabs: eventsTypeList.map((eventType) {
                     return Tab(
                       child: TapEvents(
-                        eventName: eventName,
-                        isSelected: selectedIndex == eventsNameList.indexOf(eventName),
+                        eventName: getEventLabel(context, eventType),
+                        isSelected:
+                            selectedIndex == eventsTypeList.indexOf(eventType),
                       ),
                     );
                   }).toList(),
@@ -134,7 +128,7 @@ class _AddEventPageState extends State<AddEventPage> {
                           borderSide: BorderSide(
                             color: themeProvider.appTheme == ThemeMode.light
                                 ? AppColors.blackColor
-                                : AppColors.primaryLight, 
+                                : AppColors.primaryLight,
                             width: 2,
                           ),
                         ),
@@ -160,8 +154,9 @@ class _AddEventPageState extends State<AddEventPage> {
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                              color: AppColors.primaryLight,
-                              width: 2),
+                            color: AppColors.primaryLight,
+                            width: 2,
+                          ),
                         ),
                         errorStyle: TextStyle(
                           color: AppColors.redColor,
@@ -169,7 +164,7 @@ class _AddEventPageState extends State<AddEventPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      
+
                       style: TextStyle(
                         color: themeProvider.appTheme == ThemeMode.light
                             ? AppColors.blackColor
@@ -186,7 +181,7 @@ class _AddEventPageState extends State<AddEventPage> {
                       },
                     ),
                     SizedBox(height: 15),
-                    
+
                     TextFormField(
                       cursorColor: themeProvider.appTheme == ThemeMode.light
                           ? AppColors.blackColor
@@ -205,7 +200,7 @@ class _AddEventPageState extends State<AddEventPage> {
                           borderSide: BorderSide(
                             color: themeProvider.appTheme == ThemeMode.light
                                 ? AppColors.blackColor
-                                : AppColors.primaryLight, 
+                                : AppColors.primaryLight,
                             width: 2,
                           ),
                         ),
@@ -231,8 +226,9 @@ class _AddEventPageState extends State<AddEventPage> {
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                              color: AppColors.primaryLight,
-                              width: 2),
+                            color: AppColors.primaryLight,
+                            width: 2,
+                          ),
                         ),
                         errorStyle: TextStyle(
                           color: AppColors.redColor,
@@ -263,7 +259,12 @@ class _AddEventPageState extends State<AddEventPage> {
               SizedBox(height: 15),
               Row(
                 children: [
-                  Icon(Icons.calendar_month, color: themeProvider.appTheme == ThemeMode.light ? AppColors.blackColor : AppColors.primaryLight),
+                  Icon(
+                    Icons.calendar_month,
+                    color: themeProvider.appTheme == ThemeMode.light
+                        ? AppColors.blackColor
+                        : AppColors.primaryLight,
+                  ),
                   SizedBox(width: 20),
 
                   Text(
@@ -277,7 +278,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                   Spacer(),
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
@@ -290,7 +291,7 @@ class _AddEventPageState extends State<AddEventPage> {
                         });
                       }
                       // showDatePicker(
-                      //   context: context, 
+                      //   context: context,
                       //   firstDate: DateTime.now(),
                       //   initialDate: DateTime.now(),
                       //   lastDate: DateTime(2026),
@@ -309,13 +310,13 @@ class _AddEventPageState extends State<AddEventPage> {
                               color: AppColors.primaryLight,
                             ),
                           )
-                            : Text(
-                                '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: AppColors.primaryLight,
-                                ),
-                              ), 
+                        : Text(
+                            DateFormat('dd/MM/yyyy').format(selectedDate!),
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: AppColors.primaryLight,
+                            ),
+                          ),
                   ),
                 ],
               ),
@@ -324,7 +325,12 @@ class _AddEventPageState extends State<AddEventPage> {
 
               Row(
                 children: [
-                  Icon(Icons.access_time, color: themeProvider.appTheme == ThemeMode.light ? AppColors.blackColor : AppColors.primaryLight),
+                  Icon(
+                    Icons.access_time,
+                    color: themeProvider.appTheme == ThemeMode.light
+                        ? AppColors.blackColor
+                        : AppColors.primaryLight,
+                  ),
                   SizedBox(width: 20),
 
                   Text(
@@ -340,13 +346,12 @@ class _AddEventPageState extends State<AddEventPage> {
                   GestureDetector(
                     onTap: () async {
                       var chooseTime = await showTimePicker(
-                        context: context, 
+                        context: context,
                         initialTime: TimeOfDay.now(),
                       );
                       setState(() {
                         selectedTime = chooseTime;
                       });
-                      
                     },
 
                     child: selectedTime == null
@@ -357,13 +362,15 @@ class _AddEventPageState extends State<AddEventPage> {
                               color: AppColors.primaryLight,
                             ),
                           )
-                            : Text(
-                                selectedTime!.format(context),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: AppColors.primaryLight,
-                                ),
-                              ), 
+                        : Text(
+                            // selectedTime!.format(context),
+                            DateFormat('hh:mm a').format(DateTime(
+                                0, 0, 0, selectedTime!.hour, selectedTime!.minute)),
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: AppColors.primaryLight,
+                            ),
+                          ),
                   ),
                 ],
               ),
@@ -434,20 +441,51 @@ class _AddEventPageState extends State<AddEventPage> {
     );
   }
 
-  Future<void> AddEvent() async{
-      var event = EventModel(
-        title: TitleController.text,
-        description: DescriptionController.text,
-        dateTime: selectedDate!,
-        time: selectedTime!.format(context), 
-        eventName: selectedEvent,
-      );
-
-    try{
-      await FirebaseUtils.addEventToFirestore(event);
+  Future<void> AddEvent() async {
+    if (selectedDate == null || selectedTime == null) {
+      print("Date or Time not selected");
+      return;
     }
-    catch(e){
+
+    final fullDateTime = DateTime(
+      selectedDate!.year,
+      selectedDate!.month,
+      selectedDate!.day,
+      selectedTime!.hour,
+      selectedTime!.minute,
+    );
+
+    var event = EventModel(
+      title: TitleController.text,
+      description: DescriptionController.text,
+      dateTime: fullDateTime,
+      // time: selectedTime!.format(context),
+      eventName: selectedEvent,
+    );
+
+    try {
+      await FirebaseUtils.addEventToFirestore(event);
+    } catch (e) {
       print("Error adding event : $e");
     }
-}
+  }
+
+  String getEventLabel(BuildContext context, EventType type) {
+    switch (type) {
+      case EventType.all:
+        return AppLocalizations.of(context)!.all;
+      case EventType.sports:
+        return AppLocalizations.of(context)!.sports;
+      case EventType.birthday:
+        return AppLocalizations.of(context)!.birthday;
+      case EventType.games:
+        return AppLocalizations.of(context)!.games;
+      case EventType.meeting:
+        return AppLocalizations.of(context)!.meeting;
+      case EventType.workshop:
+        return AppLocalizations.of(context)!.workshop;
+      case EventType.eating:
+        return AppLocalizations.of(context)!.eating;
+    }
+  }
 }

@@ -48,7 +48,7 @@ class MainApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       locale: Locale(languageProvider.appLanguage),
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) => HomePage(),
         '/login': (context) => LoginPage(),

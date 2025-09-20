@@ -22,7 +22,8 @@ class _FavoriteTabState extends State<FavoriteTab> {
     Query<EventModel> query = await FirebaseUtils.getEventCollection().where(
       "isFavorite",
       isEqualTo: true,
-    ); // get collection
+    )
+    ; // get collection
 
     var event = await query.get();
     eventsList = event.docs.map((docs) {

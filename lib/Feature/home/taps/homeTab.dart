@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/Model/EventModel.dart';
@@ -28,16 +30,15 @@ class _HomeTabState extends State<HomeTab> {
       return doc.data();
     }
     ).toList();
-    log(eventsList.length.toString());
     setState(() {
       
     });
   }
 
-  void getFilteredEvents(String filterEvent) async {
+  void getFilteredEvents(EventType filterEvent) async {
     Query<EventModel> query = await FirebaseUtils.getEventCollection(); // get collection
-    if(filterEvent != 'All'){
-      query = query.where("eventName", isEqualTo: filterEvent);
+    if(filterEvent != EventType.all){
+      query = query.where("eventName", isEqualTo: filterEvent.name);
     }
 
     var event = await query.get();
@@ -164,7 +165,7 @@ class _HomeTabState extends State<HomeTab> {
                     onTap: (index) {
                       setState(() {
                         selectedIndex = index;
-                        getFilteredEvents(eventsNameList[index]);
+                        getFilteredEvents(EventType.values[index]);
                       });
                     },
                     indicatorColor: AppColors.transparentColor,
