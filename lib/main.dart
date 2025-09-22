@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:localization/Feature/Log%20In/logInPage.dart';
+import 'package:localization/Feature/Auth/Login/loginPage.dart';
+import 'package:localization/Feature/Auth/Register/registerPage.dart';
 import 'package:localization/Feature/home/AddEventScreen.dart';
 import 'package:localization/Feature/home/EditEvent.dart';
 import 'package:localization/Feature/home/homePage.dart';
@@ -11,7 +12,7 @@ import 'l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
+ 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp(
@@ -51,6 +52,7 @@ class MainApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/': (context) => HomePage(),
+        '/register': (context) => RegisterPage(),
         '/login': (context) => LoginPage(),
         '/addevent': (context) => AddEventPage(),
         },

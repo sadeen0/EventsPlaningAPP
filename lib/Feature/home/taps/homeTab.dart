@@ -71,6 +71,7 @@ class _HomeTabState extends State<HomeTab> {
       backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : Colors.black,
 
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.primaryLight : AppColors.primaryDark,
         title: Padding(
@@ -86,13 +87,13 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                   Text(
                     AppLocalizations.of(context)!.welcome,
-                    style: TextStyle(fontSize: 20,
+                    style: TextStyle(fontSize: 22,
                       fontWeight: FontWeight.bold,
                      color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    " Sadeen",
+                    "Sadeen",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -126,6 +127,7 @@ class _HomeTabState extends State<HomeTab> {
           ),
         ),
       ),
+      
       body: Column(
         children: [
           Container(

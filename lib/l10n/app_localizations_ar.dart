@@ -42,6 +42,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get password => 'كلمة المرور';
 
   @override
+  String get re_password => 'إعادة إدخال كلمة المرور';
+
+  @override
   String get enterName => 'ادخل اسمك';
 
   @override
@@ -49,6 +52,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterPassword => 'ادخل كلمة المرور';
+
+  @override
+  String get enterRePassword => 'أكد كلمة المرور';
 
   @override
   String get done => 'تم';

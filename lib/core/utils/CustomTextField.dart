@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final int? maxLines;
   final MyValidator? validator;
+  final TextInputType? keyboardType;
 
   const CustomTextField({
     required this.hintText,
@@ -29,11 +30,13 @@ class CustomTextField extends StatelessWidget {
     super.key,
     this.color,
     this.validator,
+    this.keyboardType,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
       controller: controller,
       validator: validator,
       maxLines: maxLines,
