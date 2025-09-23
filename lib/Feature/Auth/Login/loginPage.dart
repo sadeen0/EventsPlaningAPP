@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:localization/Feature/Auth/Register/registerPage.dart';
 import 'package:localization/Feature/home/homePage.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
@@ -69,11 +70,11 @@ class _LoginPageState extends State<LoginPage> {
                         controller: emailController,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Email is required";
+                            return AppLocalizations.of(context)!.email_required;
                           } else if (!RegExp(
                             r'^[a-zA-Z]{2,8}@[a-z]{2,8}\.[a-z]{2,5}',
                           ).hasMatch(value)) {
-                            return "Email must be in the format: name@domain.com";
+                            return AppLocalizations.of(context)!.enterValidEmail;
                           }
                           return null;
                         },
@@ -94,11 +95,11 @@ class _LoginPageState extends State<LoginPage> {
                         controller: passwordController,
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
-                            return "Password is required";
+                            return AppLocalizations.of(context)!.password_required;
                           } else if (!RegExp(
                             '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}\$',
                           ).hasMatch(value)) {
-                            return "Password must be 8+ chars with letters & numbers";
+                            return AppLocalizations.of(context)!.enterValidPassword;
                           }
                           return null;
                         },
@@ -136,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "Forgot Password?",
+                            AppLocalizations.of(context)!.forgotPassword,
                             style: TextStyle(
                               color: themeProvider.appTheme == ThemeMode.light
                                   ? AppColors.primaryLight
@@ -156,11 +157,36 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: 25),
                       CustomButton(
                         width: double.infinity,
-                        txt: "Login",
+                        txt: AppLocalizations.of(context)!.login,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             Login();
                           }
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      Text( 
+                        AppLocalizations.of(context)!.or,
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 1.5,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: themeProvider.appTheme == ThemeMode.light
+                              ? AppColors.blackColor
+                              : AppColors.whiteColor,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      CustomButton(
+                        width: double.infinity,
+                        txt: AppLocalizations.of(context)!.register,
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()),
+                          );
                         },
                       ),
                     ],

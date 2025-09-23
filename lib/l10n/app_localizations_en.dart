@@ -33,6 +33,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Event Planing';
 
   @override
+  String get login => 'Login';
+
+  @override
+  String get forgotPassword => 'Forgot Password?';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get or => 'Or';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
   String get personName => 'Name';
 
   @override
@@ -55,6 +73,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterRePassword => 'Confirm Your Password';
+
+  @override
+  String get password_required => 'Password is required';
+
+  @override
+  String get passwords_not_match => 'Passwords don\'t match';
+
+  @override
+  String get email_required => 'Email is required';
+
+  @override
+  String get enterValidEmail => 'Enter a valid email';
+
+  @override
+  String get name_required => 'Name is required';
+
+  @override
+  String get enterValidName => 'Enter a valid name';
+
+  @override
+  String get enterValidPassword =>
+      'Password must be 8+ chars with letters & numbers';
 
   @override
   String get done => 'Done';

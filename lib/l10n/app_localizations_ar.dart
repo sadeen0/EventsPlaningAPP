@@ -33,6 +33,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appTitle => 'تخطيط الفعاليات';
 
   @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get forgotPassword => 'هل نسيت كلمة المرور؟';
+
+  @override
+  String get register => 'إنشاء حساب';
+
+  @override
+  String get or => 'أو';
+
+  @override
+  String get skip => 'تخطي';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
   String get personName => 'الاسم';
 
   @override
@@ -55,6 +73,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get enterRePassword => 'أكد كلمة المرور';
+
+  @override
+  String get password_required => 'كلمة المرور مطلوبة';
+
+  @override
+  String get passwords_not_match => 'كلمات المرور غير متطابقة';
+
+  @override
+  String get email_required => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get enterValidEmail => 'الرجاء إدخال بريد إلكتروني صالح';
+
+  @override
+  String get name_required => 'الاسم مطلوب';
+
+  @override
+  String get enterValidName => 'ادخل اسمًا صحيحًا';
+
+  @override
+  String get enterValidPassword =>
+      'كلمة المرور يجب أن تتكون من 8 أحرف على الأقل وتحتوي على أحرف وأرقام';
 
   @override
   String get done => 'تم';

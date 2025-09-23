@@ -146,6 +146,42 @@ abstract class AppLocalizations {
   /// **'Event Planing'**
   String get appTitle;
 
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'Or'**
+  String get or;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
   /// No description provided for @personName.
   ///
   /// In en, this message translates to:
@@ -193,6 +229,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm Your Password'**
   String get enterRePassword;
+
+  /// No description provided for @password_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get password_required;
+
+  /// No description provided for @passwords_not_match.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords don\'t match'**
+  String get passwords_not_match;
+
+  /// No description provided for @email_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get email_required;
+
+  /// No description provided for @enterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email'**
+  String get enterValidEmail;
+
+  /// No description provided for @name_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get name_required;
+
+  /// No description provided for @enterValidName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid name'**
+  String get enterValidName;
+
+  /// No description provided for @enterValidPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be 8+ chars with letters & numbers'**
+  String get enterValidPassword;
 
   /// No description provided for @done.
   ///

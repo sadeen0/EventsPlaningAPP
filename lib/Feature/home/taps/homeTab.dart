@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localization/Model/EventModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
@@ -57,6 +58,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
+
 
     List<String> eventsNameList = [
       AppLocalizations.of(context)!.all,
