@@ -4,6 +4,7 @@ import 'package:localization/Feature/Auth/Register/registerPage.dart';
 import 'package:localization/Feature/home/AddEventScreen.dart';
 import 'package:localization/Feature/home/EditEvent.dart';
 import 'package:localization/Feature/home/homePage.dart';
+import 'package:localization/Model/UserModel.dart';
 import 'package:localization/core/providers/appLanguage_Provider.dart';
 import 'package:localization/core/theme/AppTheme.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
@@ -53,11 +54,9 @@ class MainApp extends StatelessWidget {
       locale: Locale(languageProvider.appLanguage),
       initialRoute: '/login',
       routes: {
-        '/': (context) => HomePage(),
         '/register': (context) => RegisterPage(),
         '/login': (context) => LoginPage(),
-        '/addevent': (context) => AddEventPage(),
-        },
+      },
     );
   }
 }

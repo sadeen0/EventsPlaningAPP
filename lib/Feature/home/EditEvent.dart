@@ -573,6 +573,7 @@ class _EditEventPageState extends State<EditEventPage> {
       dateTime: fullDateTime,
       // time: selectedTime!.format(context),
       eventName: selectedEvent,
+      userId: widget.event.userId,
     );
 
     try {

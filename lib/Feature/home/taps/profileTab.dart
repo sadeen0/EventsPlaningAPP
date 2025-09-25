@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/Model/UserModel.dart';
 import 'package:localization/core/providers/appLanguage_Provider.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
@@ -6,12 +7,15 @@ import 'package:localization/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final UserModel user;
+  const ProfilePage({super.key, required this.user});
+
 
   @override
   Widget build(BuildContext context) {
     var languageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
+    
     return Scaffold(
       backgroundColor: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : Colors.black,
       appBar: AppBar(
@@ -40,13 +44,13 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Sadeen",
+                    Text(user.name,
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight
                     ),),
-                    Text("sadeen@gmail.com",
+                    Text(user.email,
                     style: TextStyle(
                       fontSize: 20,
                       color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,

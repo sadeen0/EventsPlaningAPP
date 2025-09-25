@@ -4,22 +4,23 @@ import 'package:localization/Feature/home/taps/homeTab.dart';
 import 'package:localization/Feature/home/taps/mapTab.dart';
 import 'package:localization/Feature/home/taps/favoriteTab.dart';
 import 'package:localization/Feature/home/taps/profileTab.dart';
+import 'package:localization/Model/UserModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
 import 'package:localization/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  final UserModel user;
+  HomePage({super.key, required this.user});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  
   int selectedIndex = 0;
-  final List<Widget> taps = [HomeTab(), MapTab(), FavoriteTab(), ProfilePage()];
+  late final List<Widget> taps = [HomeTab(user: widget.user), MapTab(), FavoriteTab(), ProfilePage(user: widget.user)];
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return AddEventPage();
+                return AddEventPage(user: widget.user);
               },
             ),
           );

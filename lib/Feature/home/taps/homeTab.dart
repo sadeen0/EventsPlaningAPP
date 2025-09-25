@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localization/Model/EventModel.dart';
+import 'package:localization/Model/UserModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
 import 'package:localization/core/utils/FirebaseUtils.dart';
@@ -15,7 +16,8 @@ import 'dart:developer';
 
 
 class HomeTab extends StatefulWidget {
-  HomeTab({super.key});
+  final UserModel user;
+  HomeTab({super.key, required this.user});
 
   @override
   State<HomeTab> createState() => _HomeTabState();
@@ -26,7 +28,9 @@ class _HomeTabState extends State<HomeTab> {
   List eventsList = [];
   
   void getAllEvents() async {
-    QuerySnapshot<EventModel> query = await FirebaseUtils.getEventCollection().limit(3).orderBy("dateTime", descending: false).get(); // get collection
+    QuerySnapshot<EventModel> query = await FirebaseUtils.getEventCollection().limit(3)
+    .where( "userId", isEqualTo: widget.user.id)
+    .orderBy("dateTime", descending: false).get(); // get collection
     eventsList = query.docs.map((doc){
       return doc.data();
     }
@@ -37,7 +41,8 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void getFilteredEvents(EventType filterEvent) async {
-    Query<EventModel> query = await FirebaseUtils.getEventCollection(); // get collection
+    Query<EventModel> query = await FirebaseUtils.getEventCollection()
+    .where("userId", isEqualTo: widget.user.id); // get collection
     if(filterEvent != EventType.all){
       query = query.where("eventName", isEqualTo: filterEvent.name);
     }
@@ -94,8 +99,7 @@ class _HomeTabState extends State<HomeTab> {
                      color: themeProvider.appTheme == ThemeMode.light ? AppColors.whiteColor : AppColors.primaryLight,),
                   ),
                   SizedBox(height: 5),
-                  Text(
-                    "Sadeen",
+                  Text( widget.user.name,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

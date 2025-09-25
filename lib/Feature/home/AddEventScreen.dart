@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:localization/Feature/home/homePage.dart';
 import 'package:localization/Model/EventModel.dart';
+import 'package:localization/Model/UserModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
 import 'package:localization/core/utils/CustomButton.dart';
@@ -11,7 +14,8 @@ import 'package:localization/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class AddEventPage extends StatefulWidget {
-  const AddEventPage({super.key});
+  final UserModel user;
+  const AddEventPage({super.key, required this.user});
 
   @override
   State<AddEventPage> createState() => _AddEventPageState();
@@ -430,7 +434,9 @@ class _AddEventPageState extends State<AddEventPage> {
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     await AddEvent();
-                    Navigator.pushNamed(context, '/');
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => HomePage(user: widget.user),
+                    ));
                   }
                 },
               ),
@@ -459,6 +465,7 @@ class _AddEventPageState extends State<AddEventPage> {
       dateTime: fullDateTime,
       // time: selectedTime!.format(context),
       eventName: selectedEvent,
+      userId: FirebaseAuth.instance.currentUser!.uid,
     );
 
     try {

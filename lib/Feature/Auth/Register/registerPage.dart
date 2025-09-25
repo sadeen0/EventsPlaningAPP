@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localization/Feature/Auth/Login/loginPage.dart';
 import 'package:localization/Feature/home/homePage.dart';
+import 'package:localization/Model/UserModel.dart';
 import 'package:localization/core/providers/appTheme_Provider.dart';
 import 'package:localization/core/utils/AppColors.dart';
 import 'package:localization/core/utils/CustomTextField.dart';
+import 'package:localization/core/utils/FirebaseUtils.dart';
 import 'package:localization/core/utils/TextStyle.dart';
 import 'package:localization/l10n/app_localizations.dart';
 import 'package:localization/core/utils/CustomButton.dart';
@@ -336,15 +338,16 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void Register() async {
     try {
-      final credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: emailController.text,
             password: passwordController.text,
           );
+
+      UserModel user = await AddUser();
       if (formKey.currentState!.validate()) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => HomePage(user: user)),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -367,4 +370,24 @@ class _RegisterPageState extends State<RegisterPage> {
       print(e);
     }
   }
+
+  Future<UserModel> AddUser() async {
+    var uid = FirebaseAuth.instance.currentUser?.uid;
+    var user = UserModel(
+      id: uid!,
+      name: nameController.text,
+      email: emailController.text,
+      image: '',
+    );
+ 
+
+    try {
+      await FirebaseUtils.addUserToFirestore(user);
+    } catch (e) {
+      print("Error adding user : $e");
+    }
+
+    return user;
+  }
+
 }

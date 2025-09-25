@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:localization/Model/EventModel.dart';
+import 'package:localization/Model/UserModel.dart';
 
 class FirebaseUtils {
 
@@ -40,5 +42,25 @@ class FirebaseUtils {
     await collectionRef.doc(event.id).delete();
   }
 
+  static CollectionReference <UserModel> getUserCollection(){
+    return FirebaseFirestore.instance.collection(UserModel.collectionName)
+    .withConverter<UserModel>(
+      fromFirestore: (snapshot, options) => UserModel.fromFirestore(snapshot.data()!, snapshot.id),
+      toFirestore: (user, options) => user.toFirestore(),
+    );
+  }
 
+  static Future<void> addUserToFirestore(UserModel user) {
+    var collectionRef = getUserCollection();
+    var uid = FirebaseAuth.instance.currentUser!.uid;
+    user.id = uid; // set user ID
+
+    return collectionRef.doc(uid).set(user);
+  }
+
+  static Future<UserModel?> getUserFromFirestore(String uid) async {
+    var collectionRef = getUserCollection();
+    var docSnapshot = await collectionRef.doc(uid).get();
+    return docSnapshot.data();
+  }
 }

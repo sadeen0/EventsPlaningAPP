@@ -11,6 +11,7 @@ class EventModel {
   //String location;
   bool isFavorite;
   EventType eventName;
+  String userId;
 
   EventModel({
     this.id = '',
@@ -21,6 +22,7 @@ class EventModel {
     //required this.location,
     this.isFavorite = false,
     required this.eventName,
+    required this.userId,
   });
 
   // object to json(map)
@@ -40,6 +42,7 @@ class EventModel {
   // From json to object
   EventModel.fromFirestore(Map<String, dynamic> data)
     : this(
+      userId: data['userId'],
         id: data['id'],
         title: data['title'],
         description: data['description'],
